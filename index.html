@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+    <form id="contact-form">
+        <input type="text" id="email" name="email" placeholder="Your Email" required>
+        <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+        <button type="submit">Send</button>
+    </form>
+
+    <script>
+        (function() {
+            emailjs.init("YOUR_USER_ID"); // Replace with your user ID
+        })();
+    
+        document.getElementById("contact-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const serviceID = "YOUR_SERVICE_ID"; // Replace with your service ID
+            const templateID = "YOUR_TEMPLATE_ID"; // Replace with your template ID
+
+            emailjs.sendForm(serviceID, templateID, this)
+                .then(() => {
+                    alert("Message sent successfully!");
+                }, (err) => {
+                    alert("Error sending message: " + JSON.stringify(err));
+                });
+        });
+    </script>
+</body>
+</html>
