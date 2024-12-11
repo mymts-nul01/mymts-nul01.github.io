@@ -15,14 +15,14 @@
 
     <script>
         (function() {
-            emailjs.init("YOUR_USER_ID"); // Replace with your user ID
+            emailjs.init("QfBtvxtDbOIMdrX86"); // Replace with your user ID
         })();
     
         document.getElementById("contact-form").addEventListener("submit", function(event) {
             event.preventDefault();
 
-            const serviceID = "YOUR_SERVICE_ID"; // Replace with your service ID
-            const templateID = "YOUR_TEMPLATE_ID"; // Replace with your template ID
+            const serviceID = "service_ut76as3"; // Replace with your service ID
+            const templateID = "template_n5lm9ms"; // Replace with your template ID
 
             emailjs.sendForm(serviceID, templateID, this)
                 .then(() => {
